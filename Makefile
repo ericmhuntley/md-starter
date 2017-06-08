@@ -47,21 +47,21 @@ tex:	clean $(TEX)
 docx:	clean $(DOCX)
 
 %.html:	%.md
-	pandoc -r markdown+simple_tables+table_captions+yaml_metadata_block -w html -S --template=$(PANDOC)/templates/html.template --css=$(PREFIX)/marked/kultiad-serif.css --filter pandoc-crossref --filter pandoc-citeproc --filter pandoc-citeproc-preamble --csl=$(CSL).csl --bibliography=$(BIB).bib -o $@ $<
+	pandoc -r markdown+simple_tables+table_captions+yaml_metadata_block -w html -S --template=$(PANDOC)/templates/html.template --css=$(PREFIX)/marked/kultiad-serif.css --filter pandoc-crossref --filter pandoc-citeproc --filter pandoc-citeproc-preamble --csl=$(PREFIX)$(CSL).csl --bibliography=$(BIB).bib -o $@ $<
 
 %.tex:	%.md
 	chmod +x ./vc
 	./vc
-	pandoc -r markdown+simple_tables+table_captions+yaml_metadata_block -w latex -s -S --latex-engine=xelatex --template=$(PANDOC)/templates/latex.article --filter pandoc-crossref --filter pandoc-citeproc --filter pandoc-citeproc-preamble --csl=$(CSL).csl --bibliography=$(BIB).bib -o $@ $<
+	pandoc -r markdown+simple_tables+table_captions+yaml_metadata_block -w latex -s -S --latex-engine=xelatex --template=$(PANDOC)/templates/latex.article --filter pandoc-crossref --filter pandoc-citeproc --filter pandoc-citeproc-preamble --csl=$(PREFIX)$(CSL).csl --bibliography=$(BIB).bib -o $@ $<
 
 
 %.pdf:	%.md
 	chmod +x ./vc
 	./vc
-	pandoc -r markdown+simple_tables+table_captions+yaml_metadata_block -s -S --latex-engine=xelatex --template=$(PANDOC)/templates/latex.article --filter pandoc-crossref --filter pandoc-citeproc --filter pandoc-citeproc-preamble --csl=$(CSL).csl --bibliography=$(BIB).bib -o $@ $<
+	pandoc -r markdown+simple_tables+table_captions+yaml_metadata_block -s -S --latex-engine=xelatex --template=$(PANDOC)/templates/latex.article --filter pandoc-crossref --filter pandoc-citeproc --filter pandoc-citeproc-preamble --csl=$(PREFIX)$(CSL).csl --bibliography=$(BIB).bib -o $@ $<
 
 %.docx:	%.md
-	pandoc -r markdown+simple_tables+table_captions+yaml_metadata_block -s -S --filter pandoc-crossref --filter pandoc-citeproc --csl=$(CSL).csl --bibliography=$(BIB).bib -o $@ $<
+	pandoc -r markdown+simple_tables+table_captions+yaml_metadata_block -s -S --filter pandoc-crossref --filter pandoc-citeproc --csl=$(PREFIX)$(CSL).csl --bibliography=$(BIB).bib -o $@ $<
 
 clean:
 	rm -f *.html *.pdf *.tex *.aux *.log *.docx
