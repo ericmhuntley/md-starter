@@ -25,7 +25,7 @@ SRC = $(wildcard *.$(MEXT))
 PREFIX = /home/ericmhuntley/Dropbox/config
 
 ## Location of Pandoc support files.
-PANDOC = /home/ericmhuntley/.pandoc
+PANDOC = /pandoc
 
 ## Location of your working bibliography file
 BIB = /bib/lib
@@ -52,13 +52,13 @@ docx:	clean $(DOCX)
 %.tex:	%.md
 	chmod +x ./vc
 	./vc
-	pandoc -r markdown+simple_tables+table_captions+yaml_metadata_block -w latex -s -S --latex-engine=xelatex --template=$(PANDOC)/templates/latex.article --filter pandoc-crossref --filter pandoc-citeproc --filter pandoc-citeproc-preamble --csl=$(PREFIX)$(CSL).csl --bibliography=$(PREFIX)$(BIB).bib -o $@ $<
+	pandoc -r markdown+simple_tables+table_captions+yaml_metadata_block -w latex -s -S --latex-engine=xelatex --template=$(PREFIX)/$(PANDOC)/templates/latex.article --filter pandoc-crossref --filter pandoc-citeproc --filter pandoc-citeproc-preamble --csl=$(PREFIX)$(CSL).csl --bibliography=$(PREFIX)$(BIB).bib -o $@ $<
 
 
 %.pdf:	%.md
 	chmod +x ./vc
 	./vc
-	pandoc -r markdown+simple_tables+table_captions+yaml_metadata_block -s -S --latex-engine=xelatex --template=$(PANDOC)/templates/latex.article --filter pandoc-crossref --filter pandoc-citeproc --filter pandoc-citeproc-preamble --csl=$(PREFIX)$(CSL).csl --bibliography=$(PREFIX)$(BIB).bib -o $@ $<
+	pandoc -r markdown+simple_tables+table_captions+yaml_metadata_block -s -S --latex-engine=xelatex --template=$(PREFIX)/$(PANDOC)/templates/latex.article --filter pandoc-crossref --filter pandoc-citeproc --filter pandoc-citeproc-preamble --csl=$(PREFIX)$(CSL).csl --bibliography=$(PREFIX)$(BIB).bib -o $@ $<
 
 %.docx:	%.md
 	pandoc -r markdown+simple_tables+table_captions+yaml_metadata_block -s -S --filter pandoc-crossref --filter pandoc-citeproc --csl=$(PREFIX)$(CSL).csl --bibliography=$(PREFIX)$(BIB).bib -o $@ $<
