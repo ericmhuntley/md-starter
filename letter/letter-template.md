@@ -15,7 +15,6 @@ return-address:
 - 817 Patterson Office Tower
 - Lexington, KY 40506-0027
 letterhead: "./media/letterhead.pdf"
-crossrefYaml: "./pandoc-crossref-settings.yaml"
 links-as-notes: true
 ...
 
