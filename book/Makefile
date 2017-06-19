@@ -31,7 +31,7 @@ PANDOC = /pandoc
 BIB = /bib/lib
 
 ## CSL stylesheet (located in the csl folder of the PREFIX directory).
-CSL = /csl/chicago-author-date
+CSL = /csl/chicago-note-bibliography
 
 
 PDFS=$(SRC:.md=.pdf)
@@ -46,21 +46,20 @@ html:	clean $(HTML)
 tex:	clean $(TEX)
 docx:	clean $(DOCX)
 
-%.html:	metadata.yaml %.md
+book.html:	metadata.yaml ./contents/*.md
 	cd vc && chmod +x ./vc && ./vc
-	pandoc -r markdown+simple_tables+table_captions+yaml_metadata_block -w html -S --template=$(PREFIX)$(PANDOC)/templates/html.template --css=$(PREFIX)/marked/kultiad-serif.css --filter pandoc-crossref --filter pandoc-citeproc --filter pandoc-citeproc-preamble --csl=$(PREFIX)$(CSL).csl --bibliography=$(PREFIX)$(BIB).bib $^ -o $@
+	pandoc -r markdown+simple_tables+table_captions+yaml_metadata_block -w html -S --template=$(PREFIX)$(PANDOC)/templates/html.template --css=$(PREFIX)/marked/kultiad-serif.css --filter pandoc-crossref --filter pandoc-citeproc --filter pandoc-citeproc-preamble -M citeproc-preamble=$(PREFIX)$(PANDOC)/citeproc-preamble/book.latex --csl=$(PREFIX)$(CSL).csl --bibliography=$(PREFIX)$(BIB).bib $^ -o $@
 
-%.tex:	metadata.yaml %.md
+book.tex:	metadata.yaml ./contents/*.md
 	cd vc && chmod +x ./vc && ./vc
-	pandoc -r markdown+simple_tables+table_captions+yaml_metadata_block -w latex -s -S --latex-engine=xelatex --template=$(PREFIX)$(PANDOC)/templates/latex.template --top-level-division=section --filter pandoc-crossref --filter pandoc-citeproc --filter pandoc-citeproc-preamble -M citeproc-preamble=$(PREFIX)$(PANDOC)/citeproc-preamble/default.latex --csl=$(PREFIX)$(CSL).csl --bibliography=$(PREFIX)$(BIB).bib $^ -o $@
+	pandoc -r markdown+simple_tables+table_captions+yaml_metadata_block -w latex -s -S --latex-engine=xelatex --template=$(PREFIX)$(PANDOC)/templates/latex.template --filter pandoc-crossref --filter pandoc-citeproc --filter pandoc-citeproc-preamble -M citeproc-preamble=$(PREFIX)$(PANDOC)/citeproc-preamble/book.latex --csl=$(PREFIX)$(CSL).csl --bibliography=$(PREFIX)$(BIB).bib $^ -o $@
 
 
-%.pdf:	metadata.yaml %.md
+book.pdf:	metadata.yaml ./contents/*.md
 	cd vc && chmod +x ./vc && ./vc
-	pandoc -r markdown+simple_tables+table_captions+yaml_metadata_block -s -S --latex-engine=xelatex --template=$(PREFIX)$(PANDOC)/templates/latex.template --top-level-division=section --filter pandoc-crossref --filter pandoc-citeproc --filter pandoc-citeproc-preamble -M citeproc-preamble=$(PREFIX)$(PANDOC)/citeproc-preamble/default.latex --csl=$(PREFIX)$(CSL).csl --bibliography=$(PREFIX)$(BIB).bib $^ -o $@
+	pandoc -r markdown+simple_tables+table_captions+yaml_metadata_block -s -S --latex-engine=xelatex --template=$(PREFIX)$(PANDOC)/templates/latex.template --filter pandoc-crossref --filter pandoc-citeproc --filter pandoc-citeproc-preamble -M citeproc-preamble=$(PREFIX)$(PANDOC)/citeproc-preamble/book.latex --csl=$(PREFIX)$(CSL).csl --bibliography=$(PREFIX)$(BIB).bib $^ -o $@
 
-%.docx:	metadata.yaml %.md
-	cd vc && chmod +x ./vc && ./vc
+book.docx: metadata.yaml ./contents/*.md
 	pandoc -r markdown+simple_tables+table_captions+yaml_metadata_block -s -S --filter pandoc-crossref --filter pandoc-citeproc --csl=$(PREFIX)$(CSL).csl --bibliography=$(PREFIX)$(BIB).bib $^ -o $@
 
 clean:

@@ -1,0 +1,35 @@
+---
+title: "The Title of my Paper"
+subtitle: "Subtitles are a Necessary Part"
+author:
+- name: Eric M. Huntley
+  affiliation: University of Kentucky
+  email: ericmhuntley@uky.edu
+thanks: false
+keywords:
+- apples
+- oranges
+- octopi
+abstract: ""
+link-citations: true
+mainfont: Minion Pro
+sansfont: DIN Pro
+monofont: DejaVu Sans Mono
+mathfont: false
+geometry: false
+verbatim-in-note: true
+color: red
+links-as-notes: false
+numbersections: false
+secnumdepth: 0
+indent: false
+toc: true
+lot: false
+lof: true
+draft: true
+indent: true
+top-level-section: chapter
+book: true
+...
+
+\aliaspagestyle{chapter}{git}
