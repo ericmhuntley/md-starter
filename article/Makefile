@@ -22,7 +22,7 @@ MEXT = md
 SRC = $(wildcard *.$(MEXT))
 
 ## Location of support files.
-PREFIX = /home/ericmhuntley/Dropbox/config
+PREFIX = $(HOME)/Dropbox/config
 
 ## Location of Pandoc support files.
 PANDOC = /pandoc
